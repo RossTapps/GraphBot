@@ -5,7 +5,7 @@ There are many ways and reasons to cook but limited ways to find what and how to
 
 ## Data
 
-![Solution Architure](https://github.com/RossTapps/GraphBot/blob/master/Solution%20Architure.JPG)
+![Solution Architure](https://github.com/RossTapps/GraphBot/blob/master/Solution_Architecture.JPG)
 
 ## Modelling 
 
