@@ -1,0 +1,12 @@
+
+:> g.addV('Recipe').property('name', 'lasgne')
+:> g.addV('Ingredient').property('name', 'Mince Beef')
+:> g.addV('Person').property('name', 'Ross')
+
+:> g.V().hasLabel('Recipe').has('name', 'lasgne').addE('has').to(g.V().hasLabel('Ingredient').has('name', 'Mince Beef'))
+:> g.V().hasLabel('Person').has('name', 'Ross').addE('in larder').to(g.V().hasLabel('Ingredient').has('name', 'Mince Beef'))
+
+
+Querry
+
+:> g.V().hasLabel('Recipe').has('name', 'lasgne').outE('has').inV().hasLabel('Ingredient')
