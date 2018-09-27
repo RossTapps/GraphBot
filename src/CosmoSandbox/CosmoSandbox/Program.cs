@@ -56,7 +56,11 @@ namespace CosmoSandbox
                 foreach (var recipe in recipes)
                 {
                     // add recipe vertice if not already there
-                    await AddRecipe(client, graph, recipe.name.ToLower(), recipe.mealtype);
+                    await AddRecipe(client, graph, recipe.name.ToLower());
+                    // add mealtype of not present
+                    await AddMealType(client, graph, recipe.mealtype.ToLower());
+                    // add recipe to mealtype connection
+                    await AddMealTypeRecipeConnection(client, graph, recipe.name.ToLower(), recipe.mealtype.ToLower());
 
                     // loop all ingredients
                     foreach (var ingredient in recipe.ingredients)
@@ -90,14 +94,25 @@ namespace CosmoSandbox
             }
         }
 
-        private async Task AddRecipe(DocumentClient client, DocumentCollection graph, string recipe, string mealtype)
+        private async Task AddRecipe(DocumentClient client, DocumentCollection graph, string recipe)
         {
             // add recipe vertice if not already there
             var existRecipeCmd = $"g.V().has('name', '{recipe}')";
             if (!(await IsPresent(client, graph, existRecipeCmd)))
             {
-                var addRecipeCmd = $"g.addV('recipe').property('name', '{recipe}').property('mealtype', '{mealtype}')";
+                var addRecipeCmd = $"g.addV('recipe').property('name', '{recipe}')";
                 await ExecuteGraphCmd(client, graph, addRecipeCmd);
+            }
+        }
+
+        private async Task AddMealType(DocumentClient client, DocumentCollection graph, string mealType)
+        {
+            // add mealtype vertice if not already there
+            var existMealTypeCmd = $"g.V().has('name', '{mealType}')";
+            if (!(await IsPresent(client, graph, existMealTypeCmd)))
+            {
+                var addMealTypeCmd = $"g.addV('mealtype').property('name', '{mealType}')";
+                await ExecuteGraphCmd(client, graph, addMealTypeCmd);
             }
         }
 
@@ -118,6 +133,15 @@ namespace CosmoSandbox
             await ExecuteGraphCmd(client, graph, addConnectionCmd);
             // Add edge from ingredient to recipe if not already there
             addConnectionCmd = $"g.V().has('name', '{ingredient}').addE('ispartof').to(g.V().has('name', '{recipe}'))";
+            await ExecuteGraphCmd(client, graph, addConnectionCmd);
+        }
+
+        private async Task AddMealTypeRecipeConnection(DocumentClient client, DocumentCollection graph, string recipe, string mealType)
+        {
+            var addConnectionCmd = $"g.V().has('name', '{recipe}').addE('isa').to(g.V().has('name', '{mealType}'))";
+            await ExecuteGraphCmd(client, graph, addConnectionCmd);
+            // Add edge from ingredient to recipe if not already there
+            addConnectionCmd = $"g.V().has('name', '{mealType}').addE('couldserve').to(g.V().has('name', '{recipe}'))";
             await ExecuteGraphCmd(client, graph, addConnectionCmd);
         }
 

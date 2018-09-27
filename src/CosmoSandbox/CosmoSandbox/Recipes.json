@@ -134,5 +134,160 @@
         "name": "Garlic"
       }
     ]
+  },
+
+  {
+    "name": "Chicken Casserole",
+    "mealtype": "Dinner",
+    "ingredients": [
+      {
+        "name": "mushrooms"
+      },
+      {
+        "name": "onion"
+      },
+
+      {
+        "name": "carrots"
+      },
+
+      {
+        "name": "flour"
+      },
+
+      {
+        "name": "celery"
+      },
+
+      {
+        "name": "bay leaves"
+      }
+    ]
+  },
+  {
+    "name": "Chicken and Mushroom Pie",
+    "mealtype": "Dinner",
+    "ingredients": [
+      {
+        "name": "chicken"
+      },
+      {
+        "name": "mushrooms"
+      },
+
+      {
+        "name": "chicken stock"
+      },
+
+      {
+        "name": "puff pastry"
+      },
+
+      {
+        "name": "egg yolk"
+      },
+      {
+        "name": "crème fraîche"
+      }
+
+    ]
+  },
+  {
+    "name": "Lemon roast chicken with chorizo stuffing",
+    "mealtype": "Dinner",
+    "ingredients": [
+      {
+        "name": "chicken"
+      },
+      {
+        "name": "chorizo"
+      },
+
+      {
+        "name": "carrots"
+      },
+
+      {
+        "name": "lemon zest"
+      },
+
+      {
+        "name": "spices"
+      },
+
+      {
+        "name": "garlic"
+      },
+      {
+        "name": "potatoes"
+      }
+
+
+    ]
+  },
+  {
+    "name": "Chicken fajitas",
+    "mealtype": "Dinner",
+    "ingredients": [
+      {
+        "name": "chicken"
+      },
+      {
+        "name": "smoked paprika"
+      },
+
+      {
+        "name": "tortillas"
+      },
+
+      {
+        "name": "natural yoghurt"
+      },
+
+      {
+        "name": "Cheddar cheese"
+      },
+
+      {
+        "name": "Guacamole"
+      },
+      {
+        "name": "salsa"
+      }
+    ]
+  },
+  {
+    "name": "Chicken korma",
+    "mealtype": "Dinner",
+    "ingredients": [
+      {
+        "name": "chicken"
+      },
+      {
+        "name": "turmeric"
+      },
+
+      {
+        "name": "onion"
+      },
+
+      {
+        "name": "rice"
+      },
+
+      {
+        "name": "chilli powder"
+      },
+
+      {
+        "name": "cream"
+      },
+      {
+        "name": "chicken stock"
+      },
+      {
+        "name": "mango chutney"
+      }
+    ]
   }
 ]
