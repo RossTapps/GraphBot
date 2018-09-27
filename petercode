@@ -81,3 +81,18 @@ export const getIntent = async (message) =>
   });
 };
 
+export const getRecipesByIngredients = async (ingredient) =>
+{
+  return new Promise((resolve, reject) => {
+    client.execute(`g.V().hasLabel('ingredient').has('name' ,'${ingredient.toLowerCase()}').in('includes').values('name')`, { }, (err, results) => {
+      if (err) {
+        return reject(console.error(err));
+      }
+
+      console.log("Result: %s\n", JSON.stringify(results));
+      resolve(results)
+    });
+  });
+};
+
+
