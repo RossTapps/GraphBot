@@ -20,6 +20,8 @@ namespace CosmoSandbox
 
             string endpoint = ConfigurationManager.AppSettings["Endpoint"];
             string authKey = ConfigurationManager.AppSettings["AuthKey"];
+            //string endpoint = "https://leetest.documents.azure.com:443/";
+            //string authKey = "8r3PMn7j8I2gQv5XQybdYlhxzjL3PbDuPbk66xVQLTC6nXdS2ZFFEduWIbCoSjisl8ka3BU8NeHpSi3wzJDrOA==";
 
             using (DocumentClient client = new DocumentClient(
                 new Uri(endpoint),
@@ -42,41 +44,43 @@ namespace CosmoSandbox
             Database database = await client.CreateDatabaseIfNotExistsAsync(new Database { Id = "graphdb" });
 
             DocumentCollection graph = await client.CreateDocumentCollectionIfNotExistsAsync(
-                UriFactory.CreateDatabaseUri("graphdb"),
-                new DocumentCollection { Id = "Persons" },
+                UriFactory.CreateDatabaseUri("foodv1"),
+                new DocumentCollection { Id = "foodv1" },
                 new RequestOptions { OfferThroughput = 1000 });
 
-            var recipes = JsonConvert.DeserializeObject<Recipe[]>(System.IO.File.ReadAllText("Recipes.json"));
+            await ExecuteGraphCmd(client, graph, "g.V().drop()");
 
             try
             {
+                var recipes = JsonConvert.DeserializeObject<Recipe[]>(System.IO.File.ReadAllText("recipes.json"));
                 foreach (var recipe in recipes)
                 {
                     // add recipe vertice if not already there
-                    var existRecipeCmd = $"g.V().has('id', '{recipe.name}')";
-                    if (!(await IsPresent(client, graph, existRecipeCmd)))
-                    {
-                        var addRecipeCmd = $"g.addV('recipe').property('id', '{recipe.name}').";
-                        await ExecuteGraphCmd(client, graph, addRecipeCmd);
-                    }
+                    await AddRecipe(client, graph, recipe.name, recipe.mealtype);
 
                     // loop all ingredients
                     foreach (var ingredient in recipe.ingredients)
                     {
                         // add ingredient vertice if not already there
-                        var existIngredientCmd = $"g.V().has('id', '{ingredient.name}')";
-                        if (!(await IsPresent(client, graph, existIngredientCmd)))
-                        {
-                            var addIncredientCmd = $"g.addV('ingredient').property('id', '{ingredient.name}').";
-                            await ExecuteGraphCmd(client, graph, addIncredientCmd);
-                        }
-
+                        await AddIngredient(client, graph, ingredient.name);
                         // Add edge from recipe to ingredient if not already there
-                        var addConnectionCmd = $"g.V('{recipe.name}').addE('includes').to(g.V('{ingredient.name}'))";
-                        await ExecuteGraphCmd(client, graph, addConnectionCmd);
-                        // Add edge from ingredient to recipe if not already there
-                        addConnectionCmd = $"g.V('{ingredient.name}').addE('ispartof').to(g.V('{recipe.name}'))";
-                        await ExecuteGraphCmd(client, graph, addConnectionCmd);
+                        await AddIngredientRecipeConnection(client, graph, recipe.name, ingredient.name);
+                    }
+                }
+
+                var persons = JsonConvert.DeserializeObject<Person[]>(System.IO.File.ReadAllText("persons.json"));
+                foreach (var person in persons)
+                {
+                    // add person vertice if not already there
+                    await AddPerson(client, graph, person.name);
+
+                    // loop all ingredients
+                    foreach (var ingredient in person.ingredients)
+                    {
+                        // add ingredient vertice if not already there
+                        await AddIngredient(client, graph, ingredient.name);
+                        // Add edge from person to ingredient if not already there
+                        await AddPersonIngredientConnection(client, graph, person.name, ingredient.name);
                     }
                 }
             }
@@ -85,6 +89,58 @@ namespace CosmoSandbox
 
             }
         }
+
+        private async Task AddRecipe(DocumentClient client, DocumentCollection graph, string recipe, string mealtype)
+        {
+            // add recipe vertice if not already there
+            var existRecipeCmd = $"g.V().has('name', '{recipe}')";
+            if (!(await IsPresent(client, graph, existRecipeCmd)))
+            {
+                var addRecipeCmd = $"g.addV('recipe').property('name', '{recipe}').property('mealtype', '{mealtype}')";
+                await ExecuteGraphCmd(client, graph, addRecipeCmd);
+            }
+        }
+
+        private async Task AddIngredient(DocumentClient client, DocumentCollection graph, string ingredient)
+        {
+            // add recipe vertice if not already there
+            var existIngredientCmd = $"g.V().has('name', '{ingredient}')";
+            if (!(await IsPresent(client, graph, existIngredientCmd)))
+            {
+                var addIngredientCmd = $"g.addV('ingredient').property('name', '{ingredient}').";
+                await ExecuteGraphCmd(client, graph, addIngredientCmd);
+            }
+        }
+
+        private async Task AddIngredientRecipeConnection(DocumentClient client, DocumentCollection graph, string recipe, string ingredient)
+        {
+            var addConnectionCmd = $"g.V().has('name', '{recipe}').addE('includes').to(g.V().has('name', '{ingredient}'))";
+            await ExecuteGraphCmd(client, graph, addConnectionCmd);
+            // Add edge from ingredient to recipe if not already there
+            addConnectionCmd = $"g.V().has('name', '{ingredient}').addE('ispartof').to(g.V().has('name', '{recipe}'))";
+            await ExecuteGraphCmd(client, graph, addConnectionCmd);
+        }
+
+        private async Task AddPerson(DocumentClient client, DocumentCollection graph, string person)
+        {
+            // add recipe vertice if not already there
+            var existRecipeCmd = $"g.V().has('name', '{person}')";
+            if (!(await IsPresent(client, graph, existRecipeCmd)))
+            {
+                var addRecipeCmd = $"g.addV('person').property('name', '{person}')";
+                await ExecuteGraphCmd(client, graph, addRecipeCmd);
+            }
+        }
+
+        private async Task AddPersonIngredientConnection(DocumentClient client, DocumentCollection graph, string person, string ingredient)
+        {
+            var addConnectionCmd = $"g.V().has('name', '{person}').addE('owns').to(g.V().has('name', '{ingredient}'))";
+            await ExecuteGraphCmd(client, graph, addConnectionCmd);
+            // Add edge from ingredient to recipe if not already there
+            addConnectionCmd = $"g.V().has('name', '{ingredient}').addE('instock').to(g.V().has('name', '{person}'))";
+            await ExecuteGraphCmd(client, graph, addConnectionCmd);
+        }
+
 
         private async Task<bool> IsPresent(DocumentClient client, DocumentCollection graph, string cmd)
         {
@@ -147,6 +203,10 @@ namespace CosmoSandbox
         /// <summary>
         /// 
         /// </summary>
+        public string mealtype { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public List<IngredientsItem> ingredients { get; set; }
         /// <summary>
         /// 
@@ -164,5 +224,20 @@ namespace CosmoSandbox
         /// 
         /// </summary>
         public string originalURL { get; set; }
+    }
+
+    public class Person
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public string name { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<IngredientsItem> ingredients { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
     }
 }

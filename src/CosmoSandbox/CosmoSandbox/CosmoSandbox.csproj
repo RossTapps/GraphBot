@@ -179,7 +179,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="minimal.json" />
+    <None Include="persons.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Recipes.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
