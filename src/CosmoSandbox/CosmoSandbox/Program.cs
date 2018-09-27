@@ -18,10 +18,10 @@ namespace CosmoSandbox
         static void Main(string[] args)
         {
 
-            string endpoint = ConfigurationManager.AppSettings["Endpoint"];
-            string authKey = ConfigurationManager.AppSettings["AuthKey"];
-            //string endpoint = "https://leetest.documents.azure.com:443/";
-            //string authKey = "8r3PMn7j8I2gQv5XQybdYlhxzjL3PbDuPbk66xVQLTC6nXdS2ZFFEduWIbCoSjisl8ka3BU8NeHpSi3wzJDrOA==";
+            //string endpoint = ConfigurationManager.AppSettings["Endpoint"];
+            //string authKey = ConfigurationManager.AppSettings["AuthKey"];
+            string endpoint = "https://leetest.documents.azure.com:443/";
+            string authKey = "8r3PMn7j8I2gQv5XQybdYlhxzjL3PbDuPbk66xVQLTC6nXdS2ZFFEduWIbCoSjisl8ka3BU8NeHpSi3wzJDrOA==";
 
             using (DocumentClient client = new DocumentClient(
                 new Uri(endpoint),
