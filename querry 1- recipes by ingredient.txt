@@ -1,1 +1,2 @@
 :> g.V().hasLabel('ingredient').has('name' , 'Avacado').in('includes').values('name')
+g.V().hasLabel('recipe').has('name' , 'chicken korma').out('includes').values('name')
