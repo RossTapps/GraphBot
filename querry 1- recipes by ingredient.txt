@@ -1,2 +1,4 @@
 :> g.V().hasLabel('ingredient').has('name' , 'Avacado').in('includes').values('name')
 g.V().hasLabel('recipe').has('name' , 'chicken korma').out('includes').values('name')
+
+g.V().hasLabel('recipe').where(out('includes').has('name' , 'carrots')).where(out('includes').has('name' , 'lamb')).values()
