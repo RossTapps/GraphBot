@@ -49,5 +49,35 @@ export const query = async (convId, message) => {
   }
 };
 
+import Gremlin from 'gremlin';
+const config = {};
 
+config.endpoint = "leetest.gremlin.cosmosdb.azure.com";
+config.primaryKey = "8r3PMn7j8I2gQv5XQybdYlhxzjL3PbDuPbk66xVQLTC6nXdS2ZFFEduWIbCoSjisl8ka3BU8NeHpSi3wzJDrOA==";
+config.database = "foodv1";
+config.collection = "foodv1";
+
+const client = Gremlin.createClient(
+  443,
+  config.endpoint,
+  {
+    "session": false,
+    "ssl": true,
+    "user": `/dbs/${config.database}/colls/${config.collection}`,
+    "password": config.primaryKey
+  }
+);
+
+export const getIntent = async (message) =>
+{
+  return new Promise((resolve, reject) => {
+    request(`https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/93985341-178e-473c-88c1-6468f27345e2?subscription-key=63f80c9861174dfb8502f9b791df2698&timezoneOffset=-360&q=${message}`,  (error, response, body) => {
+      if(error) {
+        reject(error);
+      }
+
+      resolve(JSON.parse(response.body));
+    });
+  });
+};
 
