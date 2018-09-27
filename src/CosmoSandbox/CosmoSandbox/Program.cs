@@ -56,15 +56,15 @@ namespace CosmoSandbox
                 foreach (var recipe in recipes)
                 {
                     // add recipe vertice if not already there
-                    await AddRecipe(client, graph, recipe.name, recipe.mealtype);
+                    await AddRecipe(client, graph, recipe.name.ToLower(), recipe.mealtype);
 
                     // loop all ingredients
                     foreach (var ingredient in recipe.ingredients)
                     {
                         // add ingredient vertice if not already there
-                        await AddIngredient(client, graph, ingredient.name);
+                        await AddIngredient(client, graph, ingredient.name.ToLower());
                         // Add edge from recipe to ingredient if not already there
-                        await AddIngredientRecipeConnection(client, graph, recipe.name, ingredient.name);
+                        await AddIngredientRecipeConnection(client, graph, recipe.name.ToLower(), ingredient.name.ToLower());
                     }
                 }
 
@@ -72,15 +72,15 @@ namespace CosmoSandbox
                 foreach (var person in persons)
                 {
                     // add person vertice if not already there
-                    await AddPerson(client, graph, person.name);
+                    await AddPerson(client, graph, person.name.ToLower());
 
                     // loop all ingredients
                     foreach (var ingredient in person.ingredients)
                     {
                         // add ingredient vertice if not already there
-                        await AddIngredient(client, graph, ingredient.name);
+                        await AddIngredient(client, graph, ingredient.name.ToLower());
                         // Add edge from person to ingredient if not already there
-                        await AddPersonIngredientConnection(client, graph, person.name, ingredient.name);
+                        await AddPersonIngredientConnection(client, graph, person.name.ToLower(), ingredient.name.ToLower());
                     }
                 }
             }
