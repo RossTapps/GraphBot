@@ -8,8 +8,11 @@ There are many ways and reasons to cook but limited ways to find what and how to
 ![Solution Architure](https://github.com/RossTapps/GraphBot/blob/master/Solution_Architecture.JPG)
 
 
+
+
 ## Links to Recipe data bases
 http://mc6help.tripod.com/RecipeLibrary/RecipeLibrary.htm 
+
 https://airtable.com/universe/expHZcS7kWEyq5gUH/recipe-database?explore=true
 
 
