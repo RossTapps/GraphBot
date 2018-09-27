@@ -7,7 +7,15 @@ There are many ways and reasons to cook but limited ways to find what and how to
 
 ![Solution Architure](https://github.com/RossTapps/GraphBot/blob/master/Solution_Architecture.JPG)
 
-http://mc6help.tripod.com/RecipeLibrary/RecipeLibrary.htm  List of recipes, ingredients and cooking methods.
+
+
+
+## Links to Recipe data bases
+http://mc6help.tripod.com/RecipeLibrary/RecipeLibrary.htm 
+
+https://airtable.com/universe/expHZcS7kWEyq5gUH/recipe-database?explore=true
+
+
 
 ## Modelling 
 
