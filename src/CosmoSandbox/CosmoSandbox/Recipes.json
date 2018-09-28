@@ -2,6 +2,7 @@
   {
     "name": "Spaghetti Bolognese",
     "mealtype": "Dinner",
+"originalURL": "https://www.bbcgoodfood.com/recipes/1502640/the-best-spaghetti-bolognese",
     "ingredients": [
       {
         "name": "Minced Beef"
@@ -27,12 +28,18 @@
   {
     "name": "Lasagna",
     "mealtype": "Dinner",
+"originalURL": "https://www.bbc.com/food/recipes/lasagne_82381",
     "ingredients": [
       {
         "name": "Minced Beef"
       },
       {
         "name": "Onion"
+      },
+
+
+      {
+        "name": "tomatoes"
       },
 
       {
@@ -52,6 +59,7 @@
   {
     "name": "Moroccan Lamb Stew",
     "mealtype": "Dinner",
+"originalURL": "https://www.jamieoliver.com/recipes/lamb-recipes/moroccan-lamb-stew",
     "ingredients": [
       {
         "name": "Lamb"
@@ -81,6 +89,7 @@
   {
     "name": "Chicken and Avocado Salad",
     "mealtype": "Lunch",
+"originalURL": "https://www.bbcgoodfood.com/recipes/1364637/chicken-breast-with-avocado-salad",
     "ingredients": [
       {
         "name": "Chicken"
@@ -110,6 +119,7 @@
   {
     "name": "Chicken Soup",
     "mealtype": "Lunch",
+"originalURL": "https://www.bbc.com/food/recipes/chickensoup_1918",
     "ingredients": [
       {
         "name": "Chicken"
@@ -139,6 +149,7 @@
   {
     "name": "Chicken Casserole",
     "mealtype": "Dinner",
+"originalURL": "https://www.bbcgoodfood.com/recipes/collection/chicken-casserole",
     "ingredients": [
       {
         "name": "mushrooms"
@@ -167,6 +178,8 @@
   {
     "name": "Chicken and Mushroom Pie",
     "mealtype": "Dinner",
+"originalURL": "https://www.bbcgoodfood.com/recipes/1765/chicken-and-mushroom-puff-pie",
+
     "ingredients": [
       {
         "name": "chicken"
@@ -195,6 +208,7 @@
   {
     "name": "Lemon roast chicken with chorizo stuffing",
     "mealtype": "Dinner",
+"originalURL": "https://www.bbcgoodfood.com/recipes/lemon-roast-chicken-chorizo-stuffing",
     "ingredients": [
       {
         "name": "chicken"
@@ -228,6 +242,8 @@
   {
     "name": "Chicken fajitas",
     "mealtype": "Dinner",
+"originalURL": "https://www.bbcgoodfood.com/recipes/easy-chicken-fajitas",
+
     "ingredients": [
       {
         "name": "chicken"
@@ -259,6 +275,8 @@
   {
     "name": "Chicken korma",
     "mealtype": "Dinner",
+"originalURL": "https://www.bbcgoodfood.com/recipes/1897680/light-chicken-korma",
+
     "ingredients": [
       {
         "name": "chicken"
