@@ -9,7 +9,6 @@ There are many ways and reasons to cook but limited ways to find what and how to
 
 
 
-
 ## Links to Recipe data bases
 http://mc6help.tripod.com/RecipeLibrary/RecipeLibrary.htm 
 
